@@ -16,7 +16,7 @@ const config = {
     min: 1,
     max: 10,
     afterCreate: (conn, done) => {
-      conn.query('SET app.current_user = NULL', (err) => done(err));
+      conn.query('SET "app.current_user" = NULL', (err) => done(err));
     },
   },
 };
@@ -31,7 +31,7 @@ const db = knex(config);
  */
 async function withUserId(userId, trxCallback) {
   return db.transaction(async (trx) => {
-    await trx.raw("SET LOCAL app.current_user = ?", [userId || null]);
+    await trx.raw('SET LOCAL "app.current_user" = ?', [userId || null]);
     return trxCallback(trx);
   });
 }

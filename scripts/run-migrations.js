@@ -10,6 +10,7 @@ const order = [
   '20260205_rls_policies.sql',
   '20260205_refresh_tokens.sql',
   '20260205_roles_permissions.sql',
+  '20260206_rls_use_app_rls_uid.sql',
 ];
 
 async function run() {

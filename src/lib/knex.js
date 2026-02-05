@@ -16,7 +16,7 @@ const config = {
     min: 1,
     max: 10,
     afterCreate: (conn, done) => {
-      conn.query('SET "app.current_user" = NULL', (err) => done(err));
+      conn.query('SET app.rls_uid = NULL', (err) => done(err));
     },
   },
 };
@@ -24,14 +24,14 @@ const config = {
 const db = knex(config);
 
 /**
- * Run a transaction with app.current_user set for RLS.
+ * Run a transaction with app.rls_uid set for RLS.
  * @param {string} userId - UUID of the authenticated user
  * @param {(trx: Knex.Transaction) => Promise<any>} trxCallback
  * @returns {Promise<any>}
  */
 async function withUserId(userId, trxCallback) {
   return db.transaction(async (trx) => {
-    await trx.raw('SET LOCAL "app.current_user" = ?', [userId || null]);
+    await trx.raw('SET LOCAL app.rls_uid = ?', [userId || null]);
     return trxCallback(trx);
   });
 }

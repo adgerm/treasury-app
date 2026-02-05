@@ -1,0 +1,33 @@
+{
+  "name": "treasury-receipt-app",
+  "version": "1.0.0",
+  "description": "Treasury Receipt multi-org app for fraternities",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "worker": "node src/workers/sheets_worker.js",
+    "maintenance": "node src/workers/maintenance_worker.js",
+    "write-secrets": "node scripts/write_replit_secrets.js",
+    "migrate": "node scripts/run-migrations.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "@sentry/node": "^7.99.0",
+    "aws-sdk": "^2.1530.0",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "googleapis": "^128.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.8",
+    "nodemon": "^3.0.2",
+    "pg": "^8.11.3",
+    "socket.io": "^4.7.2",
+    "uuid": "^9.0.1",
+    "zod": "^3.22.4"
+  }
+}

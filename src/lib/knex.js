@@ -3,15 +3,16 @@ const knex = require('knex');
 const config = {
   client: 'pg',
   connection: process.env.DATABASE_URL,
-  pool: { min: 1, max: 10 },
+  pool: {
+    min: 1,
+    max: 10,
+    afterCreate: (conn, done) => {
+      conn.query('SET app.current_user = NULL', (err) => done(err));
+    },
+  },
 };
 
 const db = knex(config);
-
-// After each new connection, set a default for app.current_user (RLS)
-db.client.pool.on('create', (client) => {
-  client.query('SET app.current_user = NULL');
-});
 
 /**
  * Run a transaction with app.current_user set for RLS.

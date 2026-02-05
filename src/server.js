@@ -1,4 +1,13 @@
 require('dotenv').config();
+process.on('uncaughtException', (err) => {
+  console.error('uncaughtException:', err);
+  process.exit(1);
+});
+process.on('unhandledRejection', (reason, p) => {
+  console.error('unhandledRejection:', reason);
+  process.exit(1);
+});
+console.log('Server process started');
 
 const express = require('express');
 const http = require('http');
@@ -77,9 +86,16 @@ async function start() {
     console.error('Database connection failed:', err.message);
     process.exit(1);
   }
+  server.on('error', (err) => {
+    console.error('Server error:', err);
+    process.exit(1);
+  });
   server.listen(PORT, () => {
     console.log('Server listening on', PORT);
   });
 }
 
-start();
+start().catch((err) => {
+  console.error('Start failed:', err);
+  process.exit(1);
+});

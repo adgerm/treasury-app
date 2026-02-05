@@ -9,6 +9,22 @@ ALTER TABLE room_members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE org_invites ENABLE ROW LEVEL SECURITY;
 
+-- Drop if exists so migration is idempotent (safe to re-run)
+DROP POLICY IF EXISTS users_own ON users;
+DROP POLICY IF EXISTS orgs_select_member ON orgs;
+DROP POLICY IF EXISTS orgs_insert ON orgs;
+DROP POLICY IF EXISTS orgs_update ON orgs;
+DROP POLICY IF EXISTS memberships_select ON memberships;
+DROP POLICY IF EXISTS memberships_insert ON memberships;
+DROP POLICY IF EXISTS memberships_update ON memberships;
+DROP POLICY IF EXISTS receipts_all ON receipts;
+DROP POLICY IF EXISTS pending_syncs_all ON pending_syncs;
+DROP POLICY IF EXISTS rooms_all ON rooms;
+DROP POLICY IF EXISTS room_members_all ON room_members;
+DROP POLICY IF EXISTS messages_all ON messages;
+DROP POLICY IF EXISTS org_invites_select ON org_invites;
+DROP POLICY IF EXISTS org_invites_insert ON org_invites;
+
 -- users: own row only
 CREATE POLICY users_own ON users FOR ALL USING (id = (current_setting('app.current_user', true)::uuid));
 

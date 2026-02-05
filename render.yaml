@@ -1,0 +1,14 @@
+# Render.com blueprint: use npm (not yarn) and correct start command
+# See https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: treasury-app
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Add DATABASE_URL, JWT_SECRET, REFRESH_TOKEN_SECRET (and others) in Render dashboard
+      # or link a Postgres instance to auto-set DATABASE_URL

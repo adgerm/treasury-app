@@ -2,8 +2,10 @@
   "name": "treasury-receipt-app",
   "version": "1.0.0",
   "description": "Treasury Receipt multi-org app for fraternities",
+  "license": "MIT",
   "main": "src/server.js",
   "scripts": {
+    "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "worker": "node src/workers/sheets_worker.js",
     "maintenance": "node src/workers/maintenance_worker.js",

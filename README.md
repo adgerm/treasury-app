@@ -23,6 +23,17 @@ Run via `npm run migrate`, or manually:
 5. `migrations/20260205_refresh_tokens.sql`
 6. `migrations/20260205_roles_permissions.sql`
 
+## Deploy on Render.com
+
+1. Create a **Web Service** and connect your GitHub repo.
+2. Add a **PostgreSQL** database in the same account and link it (Render sets `DATABASE_URL`).
+3. **Build command:** `npm install`
+4. **Start command:** `npm start`
+5. Set env vars: `JWT_SECRET`, `REFRESH_TOKEN_SECRET` (required); optional: `SMTP_*`, `AWS_*`, `SENTRY_DSN`, `CORS_ORIGIN`.
+6. After first deploy, run migrations: in Dashboard open **Shell** and run `npm run migrate`, or add a one-off job.
+
+Alternatively, use the **Blueprint** (render.yaml) and add env vars in the dashboard.
+
 ## Deploy & test checklist
 
 - Create org: `POST /api/orgs` with Bearer token

@@ -1,8 +1,17 @@
 const knex = require('knex');
 
+const connection = process.env.DATABASE_URL;
+const connectionConfig =
+  typeof connection === 'string'
+    ? {
+        connectionString: connection,
+        ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+      }
+    : connection;
+
 const config = {
   client: 'pg',
-  connection: process.env.DATABASE_URL,
+  connection: connectionConfig,
   pool: {
     min: 1,
     max: 10,

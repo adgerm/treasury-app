@@ -18,12 +18,13 @@ const adminMembershipsRoutes = require('./routes/admin-memberships');
 const adminRoutes = require('./routes/admin');
 
 const requiredEnv = ['DATABASE_URL', 'JWT_SECRET', 'REFRESH_TOKEN_SECRET'];
-for (const key of requiredEnv) {
-  if (!process.env[key]) {
-    console.error('Missing required env:', key);
-    process.exit(1);
-  }
+const missing = requiredEnv.filter((key) => !process.env[key]);
+if (missing.length) {
+  console.error('Missing required env:', missing.join(', '));
+  console.error('On Render: add a Postgres instance, link it to this service (sets DATABASE_URL), and set JWT_SECRET and REFRESH_TOKEN_SECRET in Environment.');
+  process.exit(1);
 }
+console.log('Env OK, connecting to database...');
 
 const app = express();
 initSentry(app);
@@ -67,6 +68,18 @@ const server = http.createServer(app);
 initSocket(server);
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log('Server listening on', PORT);
-});
+
+async function start() {
+  try {
+    await knex.raw('SELECT 1');
+    console.log('Database OK');
+  } catch (err) {
+    console.error('Database connection failed:', err.message);
+    process.exit(1);
+  }
+  server.listen(PORT, () => {
+    console.log('Server listening on', PORT);
+  });
+}
+
+start();

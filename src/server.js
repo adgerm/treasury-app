@@ -14,10 +14,12 @@ const http = require('http');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const Sentry = require('@sentry/node');
-
 const { initSentry } = require('./lib/sentry');
+console.log('Loaded sentry');
 const { knex } = require('./lib/knex');
+console.log('Loaded knex');
 const { initSocket } = require('./lib/socket');
+console.log('Loaded socket');
 
 const authRoutes = require('./routes/auth');
 const orgsRoutes = require('./routes/orgs');
@@ -25,11 +27,13 @@ const receiptsRoutes = require('./routes/receipts');
 const chatsRoutes = require('./routes/chats');
 const adminMembershipsRoutes = require('./routes/admin-memberships');
 const adminRoutes = require('./routes/admin');
+console.log('Loaded routes');
 
 const requiredEnv = ['DATABASE_URL', 'JWT_SECRET', 'REFRESH_TOKEN_SECRET'];
 const missing = requiredEnv.filter((key) => !process.env[key]);
 if (missing.length) {
   console.error('Missing required env:', missing.join(', '));
+  console.error('Missing keys:', missing);
   console.error('On Render: add a Postgres instance, link it to this service (sets DATABASE_URL), and set JWT_SECRET and REFRESH_TOKEN_SECRET in Environment.');
   process.exit(1);
 }

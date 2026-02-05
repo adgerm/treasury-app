@@ -6,6 +6,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
+    "start:with-migrate": "node scripts/run-migrations.js && node src/server.js",
     "dev": "nodemon src/server.js",
     "worker": "node src/workers/sheets_worker.js",
     "maintenance": "node src/workers/maintenance_worker.js",

@@ -28,11 +28,10 @@ Run via `npm run migrate`, or manually:
 1. Create a **Web Service** and connect your GitHub repo.
 2. Add a **PostgreSQL** database in the same account and link it (Render sets `DATABASE_URL`).
 3. **Build command:** `npm install`
-4. **Start command:** `npm start`
+4. **Start command:** `npm run start:with-migrate` (runs migrations then starts the server; use this if you don't have Shell access).
 5. Set env vars: `JWT_SECRET`, `REFRESH_TOKEN_SECRET` (required); optional: `SMTP_*`, `AWS_*`, `SENTRY_DSN`, `CORS_ORIGIN`.
-6. After first deploy, run migrations: in Dashboard open **Shell** and run `npm run migrate`, or add a one-off job.
 
-Alternatively, use the **Blueprint** (render.yaml) and add env vars in the dashboard.
+If you have Shell access, you can use **Start command** `npm start` and run `npm run migrate` once in the Shell instead.
 
 ## Deploy & test checklist
 
